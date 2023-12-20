@@ -1,3 +1,8 @@
+[comment]: # " File: README.md"
+[comment]: # "  Copyright (c) Community, 2023."
+[comment]: # ""
+[comment]: # "  Licensed under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.txt)"
+[comment]: # ""
 # Splunk> Phantom
 
 Welcome to the open-source repository for Splunk> Phantom's spur_context App.
