@@ -16,16 +16,16 @@
 # Python 3 Compatibility imports
 from __future__ import print_function, unicode_literals
 
+import json
+
 # Phantom App imports
 import phantom.app as phantom
-from phantom.base_connector import BaseConnector
-from phantom.action_result import ActionResult
-
 # Usage of the consts file is recommended
 # from spurcontext_consts import *
 import requests
-import json
 from bs4 import BeautifulSoup
+from phantom.action_result import ActionResult
+from phantom.base_connector import BaseConnector
 
 
 class RetVal(tuple):
