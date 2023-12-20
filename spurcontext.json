@@ -16,14 +16,13 @@
     "utctime_updated": "2023-11-16T21:20:48.479803Z",
     "package_name": "phantom_spurcontext",
     "main_module": "spurcontext_connector.py",
-    "min_phantom_version": "6.1.1.211",
+    "min_phantom_version": "6.1.1",
     "app_wizard_version": "1.0.0",
     "configuration": {
         "base_url": {
             "description": "URL to connect to",
             "data_type": "string",
             "required": true,
-            "value_list": [],
             "default": "https://api.spur.us/v2/context/",
             "order": 0,
             "name": "base_url",
@@ -64,8 +63,6 @@
                     "contains": [
                         "ip"
                     ],
-                    "value_list": [],
-                    "default": "",
                     "order": 0,
                     "name": "ip"
                 }
@@ -77,22 +74,20 @@
                     "contains": [
                         "ip"
                     ],
-                    "column_name": "ip",
+                    "column_name": "IP",
                     "column_order": 0
                 },
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
                     "example_values": [
-                        "success"
+                        "success",
+                        "failed"
                     ]
                 },
                 {
                     "data_path": "action_result.message",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "summary.total_objects",
