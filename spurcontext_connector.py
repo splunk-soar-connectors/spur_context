@@ -230,7 +230,7 @@ class SpurContextConnector(BaseConnector):
         action_result.add_data(response)
 
         # Add a dictionary that is made up of the most important values from data into the summary
-        summary = action_result.update_summary({})
+        # summary = action_result.update_summary({})
         # summary['num_data'] = len(action_result['data'])
 
         # Return success, no need to set the message, only the status
