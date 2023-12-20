@@ -8,6 +8,7 @@
     "logo_dark": "logo_spurcontext_dark.svg",
     "product_name": "Context",
     "python_version": "3",
+    "fips_compliant": false,
     "product_version_regex": ".*",
     "publisher": "Splunk Community",
     "license": "Copyright (c) 2023 Splunk Inc.",
