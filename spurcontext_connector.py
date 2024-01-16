@@ -294,14 +294,12 @@ def main():
     argparser.add_argument('-p', '--password', help='password', required=False)
     argparser.add_argument('-v', '--verify', action='store_true', help='verify', required=False, default=False)
 
-
     args = argparser.parse_args()
     session_id = None
 
     username = args.username
     password = args.password
     verify = args.verify
-
 
     if username is not None and password is None:
 
