@@ -14,7 +14,6 @@
 # and limitations under the License.
 
 # Python 3 Compatibility imports
-from __future__ import print_function, unicode_literals
 
 import json
 
