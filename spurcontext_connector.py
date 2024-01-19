@@ -13,14 +13,9 @@
 # either express or implied. See the License for the specific language governing permissions
 # and limitations under the License.
 
-# Python 3 Compatibility imports
-
 import json
 
-# Phantom App imports
 import phantom.app as phantom
-# Usage of the consts file is recommended
-# from spurcontext_consts import *
 import requests
 from bs4 import BeautifulSoup
 from phantom.action_result import ActionResult
@@ -37,14 +32,9 @@ class SpurContextConnector(BaseConnector):
 
     def __init__(self):
 
-        # Call the BaseConnectors init first
         super(SpurContextConnector, self).__init__()
 
         self._state = None
-
-        # Variable to hold a base_url in case the app makes REST calls
-        # Do note that the app json defines the asset config, so please
-        # modify this as you deem fit.
         self._base_url = None
 
     def _process_empty_response(self, response, action_result):
@@ -58,7 +48,6 @@ class SpurContextConnector(BaseConnector):
         )
 
     def _process_html_response(self, response, action_result):
-        # An html response, treat it like an error
         status_code = response.status_code
 
         try:
@@ -76,7 +65,6 @@ class SpurContextConnector(BaseConnector):
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
     def _process_json_response(self, r, action_result):
-        # Try a json parse
         try:
             resp_json = r.json()
         except Exception as e:
@@ -86,11 +74,9 @@ class SpurContextConnector(BaseConnector):
                 ), None
             )
 
-        # Please specify the status codes here
         if 200 <= r.status_code < 399:
             return RetVal(phantom.APP_SUCCESS, resp_json)
 
-        # You should process the error returned in the json
         message = "Error from server. Status Code: {0} Data from server: {1}".format(
             r.status_code,
             r.text.replace(u'{', '{{').replace(u'}', '}}')
@@ -99,30 +85,20 @@ class SpurContextConnector(BaseConnector):
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
     def _process_response(self, r, action_result):
-        # store the r_text in debug data, it will get dumped in the logs if the action fails
         if hasattr(action_result, 'add_debug_data'):
             action_result.add_debug_data({'r_status_code': r.status_code})
             action_result.add_debug_data({'r_text': r.text})
             action_result.add_debug_data({'r_headers': r.headers})
 
-        # Process each 'Content-Type' of response separately
-
-        # Process a json response
         if 'json' in r.headers.get('Content-Type', ''):
             return self._process_json_response(r, action_result)
 
-        # Process an HTML response, Do this no matter what the api talks.
-        # There is a high chance of a PROXY in between phantom and the rest of
-        # world, in case of errors, PROXY's return HTML, this function parses
-        # the error and adds it to the action_result.
         if 'html' in r.headers.get('Content-Type', ''):
             return self._process_html_response(r, action_result)
 
-        # it's not content-type that is to be parsed, handle an empty response
         if not r.text:
             return self._process_empty_response(r, action_result)
 
-        # everything else is actually an error at this point
         message = "Can't process response from server. Status Code: {0} Data from server: {1}".format(
             r.status_code,
             r.text.replace('{', '{{').replace('}', '}}')
@@ -131,7 +107,6 @@ class SpurContextConnector(BaseConnector):
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
     def _make_rest_call(self, endpoint, action_result, method="get", **kwargs):
-        # **kwargs can be any additional parameters that requests.request accepts
 
         config = self.get_config()
 
@@ -152,7 +127,6 @@ class SpurContextConnector(BaseConnector):
         try:
             r = request_func(
                 url,
-                # auth=(username, password),  # basic authentication
                 verify=config.get('verify_server_cert', False),
                 headers=headers,
                 **kwargs
@@ -167,13 +141,8 @@ class SpurContextConnector(BaseConnector):
         return self._process_response(r, action_result)
 
     def _handle_test_connectivity(self, param):
-        # Add an action result object to self (BaseConnector) to represent the action for this param
-        action_result = self.add_action_result(ActionResult(dict(param)))
 
-        # NOTE: test connectivity does _NOT_ take any parameters
-        # i.e. the param dictionary passed to this handler will be empty.
-        # Also typically it does not add any data into an action_result either.
-        # The status and progress messages are more important.
+        action_result = self.add_action_result(ActionResult(dict(param)))
 
         self.save_progress("Connecting to endpoint")
         # make rest call
@@ -182,69 +151,36 @@ class SpurContextConnector(BaseConnector):
         )
 
         if phantom.is_fail(ret_val):
-            # the call to the 3rd party device or service failed, action result should contain all the error details
-            # for now the return is commented out, but after implementation, return from here
             self.save_progress("Test Connectivity Failed.")
             return action_result.get_status()
 
-        # Return success
         self.save_progress("AS Organization: " + response.get("as").get("organization"))
         self.save_progress("Test Connectivity Passed")
         return action_result.set_status(phantom.APP_SUCCESS)
 
-        # For now return Error with a message, in case of success we don't set the message, but use the summary
-        # return action_result.set_status(phantom.APP_ERROR, "Action not yet implemented")
-
     def _handle_lookup_ip(self, param):
-        # Implement the handler here
-        # use self.save_progress(...) to send progress messages back to the platform
-        self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
 
-        # Add an action result object to self (BaseConnector) to represent the action for this param
+        self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        # Access action parameters passed in the 'param' dictionary
-
-        # Required values can be accessed directly
         ip = param['ip']
 
-        # Optional values should use the .get() function
-        # optional_parameter = param.get('optional_parameter', 'default_value')
-
-        # make rest call
         self.debug_print("Making rest call")
         ret_val, response = self._make_rest_call(
             ip, action_result, params=None
         )
 
         if phantom.is_fail(ret_val):
-            # the call to the 3rd party device or service failed, action result should contain all the error details
-            # for now the return is commented out, but after implementation, return from here
             return action_result.get_status()
-            # pass
 
-        # Now post process the data,  uncomment code as you deem fit
-
-        # Add the response into the data section
         action_result.add_data(response)
-
-        # Add a dictionary that is made up of the most important values from data into the summary
-        # summary = action_result.update_summary({})
-        # summary['num_data'] = len(action_result['data'])
-
-        # Return success, no need to set the message, only the status
-        # BaseConnector will create a textual message based off of the summary dictionary
         return action_result.set_status(phantom.APP_SUCCESS)
-
-        # For now return Error with a message, in case of success we don't set the message, but use the summary
-        # return action_result.set_status(phantom.APP_ERROR, "Action not yet implemented")
 
     def handle_action(self, param):
         ret_val = phantom.APP_SUCCESS
 
         # Get the action that we are supposed to execute for this App Run
         action_id = self.get_action_identifier()
-
         self.debug_print("action_id", self.get_action_identifier())
 
         if action_id == 'lookup_ip':
@@ -262,16 +198,6 @@ class SpurContextConnector(BaseConnector):
 
         # get the asset config
         config = self.get_config()
-        """
-        # Access values in asset config by the name
-
-        # Required values can be accessed directly
-        required_config_name = config['required_config_name']
-
-        # Optional values should use the .get() function
-        optional_config_name = config.get('optional_config_name')
-        """
-
         self._base_url = config.get('base_url')
 
         return phantom.APP_SUCCESS
