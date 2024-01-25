@@ -2,7 +2,7 @@
 # Spur Context
 
 Publisher: Splunk Community  
-Connector Version: 1.1.0  
+Connector Version: 1.0.0  
 Product Vendor: Spur  
 Product Name: Context  
 Product Version Supported (regex): ".\*"  
