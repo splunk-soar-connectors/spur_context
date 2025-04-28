@@ -235,13 +235,5 @@
             },
             "versions": "EQ(*)"
         }
-    ],
-    "custom_made": true,
-    "copied_from_id": 345,
-    "copied_from_version": "1.7.0",
-    "directory": "spurcontext_d559fd0d-6ca4-4d24-a2be-58453ab5254c",
-    "version": 1,
-    "appname": "-",
-    "executable": "spawn3",
-    "disabled": false
+    ]
 }
