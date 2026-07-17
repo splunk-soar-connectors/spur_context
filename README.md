@@ -1,9 +1,9 @@
 # Spur Context
 
-Publisher: Splunk Community \
-Connector Version: 1.0.2 \
-Product Vendor: Spur \
-Product Name: Context \
+Publisher: Splunk Community <br>
+Connector Version: 1.0.2 <br>
+Product Vendor: Spur <br>
+Product Name: Context <br>
 Minimum Product Version: 6.1.1
 
 The Spur Context API provides REST API access for IP Context data. Visit our website for more information on use-cases, integrations, and client successes
@@ -24,14 +24,14 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 
 ### Supported Actions
 
-[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration \
+[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration <br>
 [lookup ip](#action-lookup-ip) - Check for the presence of an IP in a threat intelligence feed
 
 ## action: 'test connectivity'
 
 Validate the asset configuration for connectivity using supplied configuration
 
-Type: **test** \
+Type: **test** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -46,7 +46,7 @@ No Output
 
 Check for the presence of an IP in a threat intelligence feed
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -94,7 +94,7 @@ ______________________________________________________________________
 
 Auto-generated Splunk SOAR Connector documentation.
 
-Copyright 2025 Splunk Inc.
+Copyright 2026 Splunk Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
