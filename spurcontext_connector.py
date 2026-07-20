@@ -1,6 +1,6 @@
 # File: spurcontext_connector.py
 #
-# Copyright (c) 2024-2025 Splunk Inc.
+# Copyright (c) 2024-2026 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -106,7 +106,7 @@ class SpurContextConnector(BaseConnector):
         headers = {"Token": config["api_token"]}
 
         try:
-            r = request_func(url, verify=config.get("verify_server_cert", False), headers=headers, **kwargs)
+            r = request_func(url, verify=config.get("verify_server_cert", True), headers=headers, **kwargs)
         except Exception as e:
             return RetVal(action_result.set_status(phantom.APP_ERROR, f"Error Connecting to server. Details: {e!s}"), resp_json)
 
