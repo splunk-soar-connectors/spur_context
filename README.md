@@ -1,7 +1,7 @@
 # Spur Context
 
 Publisher: Splunk Community <br>
-Connector Version: 1.0.2 <br>
+Connector Version: 2.0.0 <br>
 Product Vendor: Spur <br>
 Product Name: Context <br>
 Minimum Product Version: 6.1.1
